@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mongoose = require("mongoose");
+
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 
@@ -38,16 +40,19 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// mongoDB
-const mongodb = require('mongodb');
-const MongoClient = mongodb.MongoClient;
-const url = "mongodb+srv://judemin:6l4XxpNED0JYzN62@shoe-oong.i1xc7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+// DB connection
+const dbAddress =
+"mongodb+srv://judemin:6l4XxpNED0JYzN62@shoe-oong.i1xc7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-MongoClient.connect(url)
-  .then(client => {
-    console.log('MongoDB connected');
-  })
-  .catch(err => console.log(err));
+mongoose
+.connect(dbAddress, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+})
+.then(() => console.log("MongoDB Connected"))
+.catch((err) => console.log(err));
 
 //
 
