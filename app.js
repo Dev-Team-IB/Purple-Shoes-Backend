@@ -38,4 +38,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// mongoDB
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
+const url = "mongodb+srv://judemin:6l4XxpNED0JYzN62@shoe-oong.i1xc7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+
+MongoClient.connect(url)
+  .then(client => {
+    console.log('MongoDB connected');
+  })
+  .catch(err => console.log(err));
+
 module.exports = app;
