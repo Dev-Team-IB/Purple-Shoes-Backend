@@ -16,19 +16,14 @@ const userSchema = mongoose.Schema({
     type: String,
     minLength: 5,
   },
-  lastName: {
+  address: {
     type: String,
     maxLength: 50,
   },
-  role: {
-    type: Number,
-    default: 0,
+  birthDate: {
+    type: Date,
   },
-  image: String,
-  token: {
-    type: String,
-  },
-  tokenExp: {
+  totPayment: {
     type: Number,
   },
 });
