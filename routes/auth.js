@@ -5,7 +5,11 @@ const { User } = require("../models/user");
 
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
-  });
+});
+
+router.get('/login', function(req, res, next) {
+  res.send('respond with a resource');
+});
 
 router.post('/register', function(req, res, next) {
   //post로 넘어온 데이터를 받아서 DB에 저장
