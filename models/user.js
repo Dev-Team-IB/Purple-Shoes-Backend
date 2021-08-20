@@ -4,6 +4,10 @@ const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema({
+  role: { // User가 Admin인지 아닌지 09이면 Admin
+    type: Number,
+    default: 0,
+  },
   name: {
     type: String,
     maxlength: 50,
@@ -63,6 +67,18 @@ userSchema.methods.generateToken = function () {
   return this.save()
     .then((user) => user)
     .catch((err) => err);
+};
+
+userSchema.statics.findByToken = function (token) {
+  let user = this;
+  // secretToken을 통해 user의 id값을 받아옴
+  // 해당 아이디로 DB의 데이터 가져옴
+  return jwt.verify(token, "secretToken", function (err, decoded) {
+    return user
+      .findOne({ _id: decoded })
+      .then((user) => user)
+      .catch((err) => err);
+  });
 };
 
 const User = mongoose.model("User", userSchema);

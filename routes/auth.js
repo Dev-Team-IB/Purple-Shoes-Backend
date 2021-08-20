@@ -1,10 +1,21 @@
 var express = require('express');
 var router = express.Router();
 const { User } = require("../models/user");
+const { auth } = require("../middleware/encryptAuth");
 
+router.get("/", auth, (req, res) => {
 
-router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
+  res.status(200).json({
+    _id: req._id,
+    isAdmin: req.user.role === 09 ? true : false,
+    isAuth: true,
+    name: req.user.name,
+    email: req.user.email,
+    address: req.user.address,
+    birthDate: req.user.birthDate,
+    totPayment: req.user.totPayment,
+  });
+
 });
 
 router.get('/login', function(req, res, next) {
@@ -16,6 +27,7 @@ router.get('/login', function(req, res, next) {
         message: "Invalid Email",
       });
     }
+
     user
       .comparePassword(req.body.password)
       .then((isMatch) => {
@@ -30,9 +42,9 @@ router.get('/login', function(req, res, next) {
           .generateToken() //jwt 토큰 생성
           .then((user) => {
             res
-              .cookie("x_auth", user.token)
+              // .cookie("x_auth", user.token)
               .status(200)
-              .json({ loginSuccess: true, userId: user._id });
+              .json({ loginSuccess: true, userToken : user.token }); // userId: user._id
           })
           .catch((err) => {
             res.status(400).send({loginSuccess: false, err});
@@ -47,7 +59,7 @@ router.post('/register', function(req, res, next) {
   //post로 넘어온 데이터를 받아서 DB에 저장
   //user 모델에서 mongoose에 연결 => 바로 데이터베이스에 저장
   const user = new User(req.body);
-  // req의 body는 
+  // req의 body는 User schema를 json화 시킨 구조
 
   user.save((err, userInfo) => {
     if (err) return res.json({ success: false, err });
