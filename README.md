@@ -1,5 +1,6 @@
-# Shoe-oong
-당신의 명품에 가치를 더하다 </br>
+# Purple-Shoes
+오직 당신을 위한 프리미엄 슈케어 서비스
+Personal Premium Shoe Care Service Only for You
 [Heroku Web Application](https://shoe-oong.herokuapp.com/)
 
 ## Index
