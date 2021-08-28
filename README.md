@@ -1,6 +1,6 @@
 # Purple-Shoes
-오직 당신을 위한 프리미엄 슈케어 서비스
-Personal Premium Shoe Care Service Only for You
+오직 당신을 위한 프리미엄 슈케어 서비스 </br>
+Personal Premium Shoe Care Service Only for You </br>
 [Heroku Web Application](https://shoe-oong.herokuapp.com/)
 
 ## Index
