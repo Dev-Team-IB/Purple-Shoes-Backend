@@ -37,7 +37,7 @@ router.get('/login', function(req, res, next) {
             message: "Invalid Password",
           });
         }
-    //비밀번호 일치했을 때 토큰 생성
+        //비밀번호 일치했을 때 토큰 생성
         user
           .generateToken() //jwt 토큰 생성
           .then((user) => {
