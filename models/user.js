@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema({
   },
   phoneNum: {
     type: String,
-    minLength: 15,
+    maxLength: 15,
   },
   address: {
     type: String,
@@ -37,6 +37,7 @@ const userSchema = mongoose.Schema({
   payments: [paymentSchema],
   totPayment: {
     type: Number,
+    default : 0,
   },
 });
 

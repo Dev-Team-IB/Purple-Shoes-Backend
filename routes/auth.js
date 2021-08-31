@@ -64,7 +64,7 @@ router.post('/register', function(req, res, next) {
   // req의 body는 User schema를 json화 시킨 구조
 
   user.save((err) => {
-    if (err) return res.json({ success: false, err });
+    if (err) return res.status(400).json({ success: false, err });
     return res.status(200).json({ success: true });
   });
 });
