@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
+
 const RestClient = require('@bootpay/server-rest-client').RestClient;
+RestClient.setConfig(
+    process.env.APPLICATION_ID,
+    process.env.PRIVATE_KEY
+);
 
 router.get('/', function(req, res, next) {
     res.status(200).send("Bootpay API");
@@ -9,11 +14,6 @@ router.get('/', function(req, res, next) {
 router.get('/lookup', function(req, res, next) {
 
     let receipt_id = req.body.receipt_id
-
-    RestClient.setConfig(
-        process.env.APPLICATION_ID,
-        process.env.PRIVATE_KEY
-    );
 
     RestClient.getAccessToken().then(function (response) {
         // Access Token을 발급 받았을 때
@@ -44,11 +44,6 @@ router.get('/delete', function(req, res, next) {
     let canel_name = req.body.canel_name;
     let canel_reason = req.body.canel_reason;
 
-    RestClient.setConfig(
-        process.env.APPLICATION_ID,
-        process.env.PRIVATE_KEY
-    );
-
     RestClient.getAccessToken().then(function (response) {
         // Access Token을 발급 받았을 때
         if (response.status === 200 && response.data.token !== undefined) {
@@ -60,9 +55,6 @@ router.get('/delete', function(req, res, next) {
             }).then(function (response) {
                 // 결제 취소가 완료되었다면
                 if (response.status === 200) {
-
-                    // 결제 취소 완료시 User의 해당 거래 id도 삭제해야 한다
-
                     res.status(200).send(response);
                 }
             }).catch(

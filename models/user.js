@@ -3,8 +3,10 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
+const { paymentSchema } = require("../schemas/payment");
+
 const userSchema = mongoose.Schema({
-  role: { // User가 Admin인지 아닌지 09이면 Admin
+  role: { // 0 - 일반 User, 8 - Tailer 수선업자, 9 - Admin
     type: Number,
     default: 0,
   },
@@ -21,6 +23,10 @@ const userSchema = mongoose.Schema({
     type: String,
     minLength: 5,
   },
+  phoneNum: {
+    type: String,
+    minLength: 15,
+  },
   address: {
     type: String,
     maxLength: 50,
@@ -28,6 +34,7 @@ const userSchema = mongoose.Schema({
   birthDate: {
     type: Date,
   },
+  payments: [paymentSchema],
   totPayment: {
     type: Number,
   },

@@ -5,9 +5,11 @@ const { auth } = require("../middleware/encryptAuth");
 
 router.get("/", auth, (req, res) => {
 
+
   res.status(200).json({
     _id: req._id,
     isAdmin: req.user.role === 09 ? true : false,
+    isTailer: req.user.role === 08 ? true : false,
     isAuth: true,
     name: req.user.name,
     email: req.user.email,
@@ -61,7 +63,7 @@ router.post('/register', function(req, res, next) {
   const user = new User(req.body);
   // req의 body는 User schema를 json화 시킨 구조
 
-  user.save((err, userInfo) => {
+  user.save((err) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({ success: true });
   });
