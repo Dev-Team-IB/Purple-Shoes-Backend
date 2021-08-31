@@ -37,6 +37,46 @@ router.get('/lookup', function(req, res, next) {
     });
 });
 
+router.get('/delete', function(req, res, next) {
+
+    let receipt_id = req.body.receipt_id;
+    let cancel_price = req.body.cancel_price; // 부분취소 가능
+    let canel_name = req.body.canel_name;
+    let canel_reason = req.body.canel_reason;
+
+    RestClient.setConfig(
+        process.env.APPLICATION_ID,
+        process.env.PRIVATE_KEY
+    );
+
+    RestClient.getAccessToken().then(function (response) {
+        // Access Token을 발급 받았을 때
+        if (response.status === 200 && response.data.token !== undefined) {
+            RestClient.cancel({
+                receiptId: receipt_id,
+                price: cancel_price,
+                name: canel_name,
+                reason: canel_reason
+            }).then(function (response) {
+                // 결제 취소가 완료되었다면
+                if (response.status === 200) {
+
+                    // 결제 취소 완료시 User의 해당 거래 id도 삭제해야 한다
+
+                    res.status(200).send(response);
+                }
+            }).catch(
+                function (error){
+                    res.status(400).send(error);
+                    console.log(error);
+                }
+            );
+        }  else{
+            res.status(400).send("Failed to get BP Token");
+        }
+    });
+});
+
 module.exports = router;
 
 
