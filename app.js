@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+require('dotenv').config();
 
 const mongoose = require("mongoose");
 
@@ -44,7 +45,7 @@ app.use(function(err, req, res, next) {
 
 // DB connection
 const dbAddress =
-"mongodb+srv://judemin:6l4XxpNED0JYzN62@shoe-oong.i1xc7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+"mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@" + process.env.DB_HOST;
 
 mongoose
 .connect(dbAddress, {
