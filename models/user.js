@@ -35,10 +35,6 @@ const userSchema = mongoose.Schema({
     type: Date,
   },
   payments: [paymentSchema],
-  totPayment: {
-    type: Number,
-    default : 0,
-  },
 });
 
 //save 메소드가 실행되기전에 비밀번호를 암호화
