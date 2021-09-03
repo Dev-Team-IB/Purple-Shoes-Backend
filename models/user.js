@@ -34,7 +34,7 @@ const userSchema = mongoose.Schema({
   birthDate: {
     type: Date,
   },
-  gender: {
+  gender: { // F / M
     type: String,
   },
   payments: [paymentSchema],

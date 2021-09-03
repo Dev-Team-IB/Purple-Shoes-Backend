@@ -7,7 +7,7 @@ let auth = (req, res, next) => {
     .then((user) => {
         
       if (!user)
-        return res.json({ isAuth: false, error: true});
+        return res.status(400).json({ isAuth: false, error: true});
 
       req.token = token;
       req.user = user;
