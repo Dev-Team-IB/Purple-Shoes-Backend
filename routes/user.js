@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const { User } = require("../models/user");
-const { paymentSchema } = require("../schemas/payment");
 const { auth } = require("../middleware/encryptAuth");
 
 router.get('/', function(req, res, next) {
@@ -9,6 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/insertPayment', auth, (req, res) => {
+
     const objPayment = {
         receiptID : req.body.receiptID,
         shipStat : req.body.shipStat,
@@ -18,6 +18,25 @@ router.get('/insertPayment', auth, (req, res) => {
     User.updateOne(
         { _id: req.user._id }, 
         { $push: { payments: objPayment } },
+        function (error, success) {
+            if (error) {
+                res.status(400).send(error);
+            } else {
+                res.status(200).send(success);
+            }
+        }
+    );
+});
+
+router.get('/deletePayment', auth, (req, res) => {
+
+    const objPayment = {
+        receiptID : req.body.receiptID
+    };
+
+    User.updateOne(
+        { _id: req.user._id }, 
+        { $pull: { payments: objPayment } },
         function (error, success) {
             if (error) {
                 res.status(400).send(error);

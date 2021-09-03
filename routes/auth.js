@@ -30,30 +30,33 @@ router.get('/login', function(req, res, next) {
       });
     }
 
-    user
-      .comparePassword(req.body.password)
-      .then((isMatch) => {
-        if (!isMatch) {
-          return res.json({
-            loginSuccess: false,
-            message: "Invalid Password",
-          });
-        }
-        //비밀번호 일치했을 때 토큰 생성
-        user
-          .generateToken() //jwt 토큰 생성
-          .then((user) => {
-            res
-              // .cookie("x_auth", user.token)
-              .status(200)
-              .json({ loginSuccess: true, userToken : user.token }); // userId: user._id
-          })
-          .catch((err) => {
-            res.status(400).send({loginSuccess: false, err});
-          });
-      })
-      .catch((err) => res.json({ loginSuccess: false, err }));
-
+    if(user){
+      user
+        .comparePassword(req.body.password)
+        .then((isMatch) => {
+          if (!isMatch) {
+            return res.json({
+              loginSuccess: false,
+              message: "Invalid Password",
+            });
+          }
+          //비밀번호 일치했을 때 토큰 생성
+          user
+            .generateToken() //jwt 토큰 생성
+            .then((user) => {
+              res
+                // .cookie("x_auth", user.token)
+                .status(200)
+                .json({ loginSuccess: true, userToken : user.token }); // userId: user._id
+            })
+            .catch((err) => {
+              res.status(400).send({loginSuccess: false, err});
+            });
+        })
+        .catch((err) => res.json({ loginSuccess: false, err }));
+    }else {
+      res.status(400).send({loginSuccess: false, message: "No Such User"});
+    }
   });
 });
 

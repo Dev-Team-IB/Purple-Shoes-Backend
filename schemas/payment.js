@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const paymentSchema = mongoose.Schema({
   receiptID: {
     type: String,
+    unique: 1,
     required: false,
   },
   shipStat: { // 배송 상태 0 - 결제확인, 1 - 수선완료, 2 - 배송중 ... => 미정

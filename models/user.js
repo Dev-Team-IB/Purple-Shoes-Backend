@@ -34,6 +34,9 @@ const userSchema = mongoose.Schema({
   birthDate: {
     type: Date,
   },
+  gender: {
+    type: String,
+  },
   payments: [paymentSchema],
 });
 
