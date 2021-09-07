@@ -23,7 +23,7 @@ router.put('/updateUser', auth, (req, res) => {
 
     const newUser = {
         userID : req.user._id,
-        lastVisit : Date.now,
+        lastVisit : (new Date().toISOString()),
     };
 
     ChatRoom.updateOne(
