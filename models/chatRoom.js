@@ -5,20 +5,21 @@ const { messageSchema } = require("../schemas/message");
 const chatRoomSchema = mongoose.Schema({
   userID: {
     type: String,
-    unique : 1,
+    unique : true,
   },
   lastChat: {
     type: Date,
     default: Date.now,
+    required: false,
   },
   userLastVisit: {
       userID : {
         type: String,
+        unique : true,
         required: false,
       },
       lastVisit : {
         type: Date,
-        default: Date.now,
         required: false,
       },
     },

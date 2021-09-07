@@ -10,22 +10,22 @@ const messageSchema = mongoose.Schema({
     type: Number,
     required: false,
   },
-  content: {
+  content: { // 메세지는 최대 1000자로 제한
     type: String,
     required: false,
     maxlength: 1000,
   },
-  isImage: {
+  isImage: { // isImage가 true일 경우 content는 이미지 제목
     type: Boolean,
     default : 0,
     required: false,
   },
   imageInfo: {
-    data : {
+    data : { // 이미지 파일
       type: Buffer,
       required: false,
     },
-    contentType : {
+    contentType : {  // 이미지 형식
       type: String,
       required: false,
     },

@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema({
   email: {
     type: String,
     trim: true, //dhsdb 1541 @naver.com 을 dhsdb1541@naver.com로 trim
-    unique: 1,
+    unique: true,
   },
   password: {
     type: String,

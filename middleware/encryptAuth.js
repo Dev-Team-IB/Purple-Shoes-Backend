@@ -7,14 +7,14 @@ let auth = (req, res, next) => {
     .then((user) => {
         
       if (!user)
-        return res.status(400).json({ isAuth: false, error: true});
+        return res.status(400).json({ isAuth: false,message : "Cannot find such user", error: true});
 
       req.token = token;
       req.user = user;
       next();
     })
     .catch((err) => {
-      throw err;
+      return res.status(400).json({ isAuth: false, error: err});
     });
 };
 
