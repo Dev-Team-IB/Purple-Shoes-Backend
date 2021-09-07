@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     res.status(200).send("User data modification");
 });
 
-router.get('/insertPayment', auth, (req, res) => {
+router.put('/putPayment', auth, (req, res) => {
 
     const objPayment = {
         receiptID : req.body.receiptID,
@@ -28,7 +28,7 @@ router.get('/insertPayment', auth, (req, res) => {
     );
 });
 
-router.get('/deletePayment', auth, (req, res) => {
+router.delete('/deletePayment', auth, (req, res) => {
 
     const objPayment = {
         receiptID : req.body.receiptID

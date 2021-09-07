@@ -22,10 +22,6 @@ module.exports = { auth };
 
 /*
 {
-    "userToken": "eyJhbGciOiJIUzI1NiJ9.NjExZjRmZmRjODlhNzA4MDljYmQzMThi.FW7Ts5OR0rVkQUZ1V6kZ82ZOy93GPY_snQ2blDGw2I4"
-}
-
-{
 	"email" : "judemin@naver.com",
 	"password" : "1234567"
 }

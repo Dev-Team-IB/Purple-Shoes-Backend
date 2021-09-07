@@ -37,7 +37,7 @@ router.get('/lookup', function(req, res, next) {
     });
 });
 
-router.get('/delete', function(req, res, next) {
+router.get('/cancel', function(req, res, next) {
 
     let receipt_id = req.body.receipt_id;
     let cancel_price = req.body.cancel_price; // 부분취소 가능
