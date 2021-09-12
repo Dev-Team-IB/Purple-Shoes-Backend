@@ -13,7 +13,7 @@ const chatRoomSchema = mongoose.Schema({
     required: false,
   },
   userLastVisit: {
-      userID : {
+      visitID : {
         type: String,
         required: false,
       },

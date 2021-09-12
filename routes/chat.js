@@ -23,12 +23,9 @@ router.get('/getChatRoom', auth, (req, res) => {
 });
 
 router.post('/makeChatRoom', auth, (req, res) => {
-
-    console.log(req.user._id);
-
     ChatRoom({ userID : req.user._id })
     .save(function (err) {
-        if (err) return res.status(400).send({success : false, err});
+        if (err) return res.status(400).send({success : false, msg : "Duplicate", err});
         return res.status(200).send({success : true, message : "ChatRoom created"});
     });
 });
@@ -42,7 +39,7 @@ router.put('/updateUser', auth, (req, res) => { // 채팅에서 auth는 chatRoom
             return res.status(400).json({ isAuth: false,message : "Cannot find such user", error: true});
 
         const newUser = {
-            userID : updateUser._id,
+            visitID : updateUser._id,
             lastVisit : (new Date().toISOString()),
         };
 
@@ -91,7 +88,7 @@ router.put('/sendMessage', auth, (req, res) => {
         update = {
             $set : { lastChat: newMsg.sendDate },
             $push : { messages: newMsg }
-        },
+        };
         options = {upsert: false};
 
         ChatRoom.findOneAndUpdate(query, update, options, function (error, success) {
