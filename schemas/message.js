@@ -17,7 +17,7 @@ const messageSchema = mongoose.Schema({
   },
   isImage: { // isImage가 true일 경우 content는 이미지 제목
     type: Boolean,
-    default : 0,
+    default : false,
     required: false,
   },
   imageInfo: {
