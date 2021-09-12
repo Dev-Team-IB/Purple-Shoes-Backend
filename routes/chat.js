@@ -8,6 +8,10 @@ router.get('/', function(req, res, next) {
     res.status(200).send("Chatting");
 });
 
+router.get('/getChatRoom', auth, (req, res) => {
+    res.status(200).send("success");
+});
+
 router.post('/makeChatRoom', auth, (req, res) => {
 
     let newCR = new ChatRoom({
@@ -20,7 +24,7 @@ router.post('/makeChatRoom', auth, (req, res) => {
     });
 });
 
-router.put('/updateUser', auth, (req, res) => {
+router.put('/updateUser', auth, (req, res) => { // 채팅에서 auth는 chatRoom을 찾는 용도로 쓰임
 
     User.findByToken(req.body.updateUserToken)
     .then((updateUser) => {
@@ -53,21 +57,49 @@ router.put('/updateUser', auth, (req, res) => {
 });
 
 router.put('/sendMessage', auth, (req, res) => {
-    const newMsg = {
-        userName : req.user.name,
-        userRole : req.user.role,
-        content : req.body.content,
-        isImage : req.body.isImage,
 
-        imageInfo: {
-            data : req.body.imgData,
-            contentType : req.body.imgType,
+    User.findByToken(req.body.sendUserToken)
+    .then((sendUser) => {
+
+        if (!sendUser)
+            return res.status(400).json({ isAuth: false,message : "Cannot find sender", error: true});
+
+        const newMsg = {
+            userName : sendUser.name,
+            userRole : sendUser.role,
+            content : req.body.content,
+            isImage : req.body.isImage,
+    
+            imageInfo: {
+                data : req.body.imgData,
+                contentType : req.body.imgType,
+            },
+            
+            sendDate : (new Date().toISOString()),
+        };
+
+        query = { userID : req.user._id },
+        update = {
+            $set : { lastChat: newMsg.sendDate },
+            $push : { messages: newMsg }
         },
-        
-        sendDate : (new Date().toISOString()),
-    };
+        options = {upsert: true};
 
-    console.log(newMsg);
+        console.log(newMsg);
+
+        ChatRoom.findOneAndUpdate(query, update, options, function (error, success) {
+                if (error) {
+                    res.status(400).send(error);
+                } else {
+                    res.status(200).send(success);
+                }
+            }
+        );
+        
+    })
+    .catch((err) => {
+      return res.status(400).json({ isAuth: false, error: err});
+    });
 
 });
 
