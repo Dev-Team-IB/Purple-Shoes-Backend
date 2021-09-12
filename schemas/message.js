@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const messageSchema = mongoose.Schema({
   userName: {
     type: String,
-    unique: 1,
     required: false,
   },
   userRole: {

@@ -15,7 +15,6 @@ const chatRoomSchema = mongoose.Schema({
   userLastVisit: {
       userID : {
         type: String,
-        unique : true,
         required: false,
       },
       lastVisit : {

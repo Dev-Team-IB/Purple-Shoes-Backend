@@ -9,16 +9,25 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/getChatRoom', auth, (req, res) => {
-    res.status(200).send("success");
+
+    ChatRoom.findOne(
+        { userID: req.user._id },
+        function (error, success) {
+            if (error) {
+                res.status(400).send(error);
+            } else {
+                res.status(200).send(success);
+        }
+    });
+
 });
 
 router.post('/makeChatRoom', auth, (req, res) => {
 
-    let newCR = new ChatRoom({
-        userID : req.user._id,
-    });
+    console.log(req.user._id);
 
-    newCR.save(function (err) {
+    ChatRoom({ userID : req.user._id })
+    .save(function (err) {
         if (err) return res.status(400).send({success : false, err});
         return res.status(200).send({success : true, message : "ChatRoom created"});
     });
@@ -83,9 +92,7 @@ router.put('/sendMessage', auth, (req, res) => {
             $set : { lastChat: newMsg.sendDate },
             $push : { messages: newMsg }
         },
-        options = {upsert: true};
-
-        console.log(newMsg);
+        options = {upsert: false};
 
         ChatRoom.findOneAndUpdate(query, update, options, function (error, success) {
                 if (error) {
