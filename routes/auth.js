@@ -5,7 +5,6 @@ const { auth } = require("../middleware/encryptAuth");
 
 router.get("/", auth, (req, res) => {
 
-
   res.status(200).json({
     _id: req._id,
     isAdmin: req.user.role === 09 ? true : false,

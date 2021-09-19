@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/getChatRoom', auth, (req, res) => {
-
+    
     ChatRoom.findOne(
         { userID: req.user._id },
         function (error, success) {
